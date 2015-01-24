@@ -1,0 +1,10 @@
+{% if todo_item_list %}
+    <p>Your Todo-list:</p>
+    <ul>
+    {% for item in todo_list %}
+        <li>{{ item.todo_text }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Nothing to do :)</p>
+{% endif %}

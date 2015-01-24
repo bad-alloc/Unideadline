@@ -52,3 +52,7 @@ docs/_build/
 
 # PyBuilder
 target/
+
+#Tutorials and random test code
+django_tutorial/
+sqlalchemytest/
