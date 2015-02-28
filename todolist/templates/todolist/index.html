@@ -4,7 +4,7 @@
 
 <form action="{% url 'todolist:add_todo' %}" method="post">
   {% csrf_token %}
-  <select name="todo_tag">
+  <select name="new_todo_tag">
     {% for item in todo_types %}
     <option>{{item}}</option>
     {% endfor %}

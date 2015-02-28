@@ -1,3 +1,5 @@
+import datetime
+
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -22,5 +24,12 @@ class TodoListView(generic.ListView):
     
 #def add_todo(request, new_todo_text):
 def add_todo(request):
-    html = "<html><body>Got something:</br>POST: " + request.POST.get("new_todo_text", "") + "</body></html>"
-    return HttpResponse(html)
+    print "Got something: POST:", request.POST.get("new_todo_text", ""), request.POST.get("new_todo_description", ""), request.POST.get("new_todo_tag", "")
+    new_todo = TodoItem(priority = 1,
+                        todo_type = TodoType.objects.get(type_tag_name=request.POST.get("new_todo_tag", "")), #TODO: use ID
+                        todo_text = request.POST.get("new_todo_text", ""),
+                        todo_description = request.POST.get("new_todo_description", ""),
+                        deadline = datetime.datetime.now())
+    new_todo.save()
+    return HttpResponseRedirect(reverse('todolist:index'))
+    #return HttpResponse(html)

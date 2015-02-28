@@ -51,8 +51,8 @@ class TodoType(models.Model):
 # TodoItems are tasks that are created by users in order to coordinate
 # work on different ressources until some deadline.
 class TodoItem(models.Model):
-    owner = models.ForeignKey(Student, related_name = 'item_owner')
-    assignee = models.ForeignKey(Student, related_name = 'item_assignee')
+    #owner = models.ForeignKey(Student, related_name = 'item_owner')
+    #assignee = models.ForeignKey(Student, related_name = 'item_assignee')
     priority = models.IntegerField()
 
     todo_type = models.ForeignKey(TodoType)
@@ -66,7 +66,7 @@ class TodoItem(models.Model):
 
     # Furthermore, Tasks are shared in a group. Everyone in that group
     # can see tasks.
-    group = models.ForeignKey(StudentGroup)
+    #group = models.ForeignKey(StudentGroup)
 
     def __unicode__(self):
         return self.todo_type.type_tag_name + ":" + self.todo_text + " -> " + self.todo_description
