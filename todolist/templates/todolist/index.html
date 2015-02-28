@@ -5,8 +5,8 @@
 <form action="{% url 'todolist:add_todo' %}" method="post">
   {% csrf_token %}
   <select name="todo_tag">
-    {% for item in todo_item_list %}
-    <option>ITEM</option>
+    {% for item in todo_types %}
+    <option>{{item}}</option>
     {% endfor %}
   </select>
   <input type="Text" name="new_todo_text"/>
@@ -14,7 +14,7 @@
   <input type="submit" name="add_todo_button" value="Add"/> </td>
 </form>
 
-{% if todo_item_list %}
+{% if todo_items %}
     <p>Your Todo-list:</p>
     <table style="width:100%">
       <tr>
@@ -23,7 +23,7 @@
 	<td>Description</td>
 	<td>Done</td>
       </tr>
-	{% for item in todo_item_list %}
+	{% for item in todo_items %}
           <tr>
             <td> {{ item.todo_type.type_tag_name }} </td>
 	    <td> {{ item.todo_text }} </td>
