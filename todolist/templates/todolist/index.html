@@ -1,9 +1,39 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'todolist/style.css' %}" />
+
+<form action="{% url 'todolist:add_todo' %}" method="post">
+  {% csrf_token %}
+  <select name="todo_tag">
+    {% for item in todo_item_list %}
+    <option>ITEM</option>
+    {% endfor %}
+  </select>
+  <input type="Text" name="new_todo_text"/>
+  <input type="Text" name="new_todo_description"/>
+  <input type="submit" name="add_todo_button" value="Add"/> </td>
+</form>
+
 {% if todo_item_list %}
     <p>Your Todo-list:</p>
+    <table style="width:100%">
+      <tr>
+	<td>Level</td>
+	<td>Name</td>
+	<td>Description</td>
+	<td>Done</td>
+      </tr>
+	{% for item in todo_item_list %}
+          <tr>
+            <td> {{ item.todo_type.type_tag_name }} </td>
+	    <td> {{ item.todo_text }} </td>
+	    <td> {{ item.todo_description }} </td>
+	    <td> <input type="submit" name="mark_done{{item.id}}" value="Done"/> </td>
+	  </tr>
+	{% endfor %}
+    </table> 
     <ul>
-    {% for item in todo_item_list %}
-        <li>{{ item.todo_type.type_tag_name }} : {{ item.todo_text }} -> {{ item.todo_description }} </li>
-    {% endfor %}
+    
     </ul>
 {% else %}
     <p>Nothing to do :)</p>
