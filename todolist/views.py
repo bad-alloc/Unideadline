@@ -22,13 +22,14 @@ class TodoListView(generic.ListView):
         return TodoItem.objects.all()
 
 def add_todo(request):
+    # Ensure we have some numeric priority so we can sort the todo list by priority later
     raw_priority = request.POST.get("new_todo_priority", "")
-
     try:
         new_priority = int(raw_priority)
     except ValueError:
         new_priority = 1
-    
+
+    # Create a new item and store it to the database
     new_todo = TodoItem(priority = new_priority,
                         todo_type = TodoType.objects.get(type_tag_name=request.POST.get("new_todo_tag", "")), #TODO: use ID
                         todo_text = request.POST.get("new_todo_text", ""),
@@ -43,7 +44,14 @@ def remove_todo(request):
     if not request.POST.get("remove", "") == '':
         TodoItem.objects.filter(id = request.POST.get("remove", "")).delete()
     elif not request.POST.get("set", "") == '':
-        pass
+        item_to_update = TodoItem.objects.get(id = request.POST.get("set", ""))
+        item_to_update.todo_type = TodoType.objects.get(type_tag_name=request.POST.get("set_todo_tag", ""))
+        try:
+            new_priority = int(request.POST.get("todo_priority", ""))
+            item_to_update.priority = new_priority
+        except ValueError:
+            pass
+        item_to_update.save()
     else:
         print "ILLEGAL REMOVE REQUEST:", request.POST
 
