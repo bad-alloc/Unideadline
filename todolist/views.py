@@ -21,15 +21,31 @@ class TodoListView(generic.ListView):
         """Return all todo items."""
         return TodoItem.objects.all()
 
-    
-#def add_todo(request, new_todo_text):
 def add_todo(request):
-    print "Got something: POST:", request.POST.get("new_todo_text", ""), request.POST.get("new_todo_description", ""), request.POST.get("new_todo_tag", "")
-    new_todo = TodoItem(priority = 1,
+    raw_priority = request.POST.get("new_todo_priority", "")
+
+    try:
+        new_priority = int(raw_priority)
+    except ValueError:
+        new_priority = 1
+    
+    new_todo = TodoItem(priority = new_priority,
                         todo_type = TodoType.objects.get(type_tag_name=request.POST.get("new_todo_tag", "")), #TODO: use ID
                         todo_text = request.POST.get("new_todo_text", ""),
                         todo_description = request.POST.get("new_todo_description", ""),
                         deadline = datetime.datetime.now())
     new_todo.save()
+
+    # Ensure we stay on the todo page.
     return HttpResponseRedirect(reverse('todolist:index'))
-    #return HttpResponse(html)
+
+def remove_todo(request):
+    if not request.POST.get("remove", "") == '':
+        TodoItem.objects.filter(id = request.POST.get("remove", "")).delete()
+    elif not request.POST.get("set", "") == '':
+        pass
+    else:
+        print "ILLEGAL REMOVE REQUEST:", request.POST
+
+        
+    return HttpResponseRedirect(reverse('todolist:index'))
