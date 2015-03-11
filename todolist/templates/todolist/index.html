@@ -2,7 +2,7 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'todolist/style.css' %}" />
 
-<a href="{% url 'todolist:index' %}">Todo</a> <a href="{% url 'todolist:index' %}">Charts</a> <a href="{% url 'todolist:index' %}">Ressources</a> <a href="{% url 'todolist:index' %}">Groups</a> <a href="{% url 'todolist:index' %}">Logout</a>
+{% include "todolist/headlinks.html" %}
 
 <form action="{% url 'todolist:add_todo' %}" method="post">
   {% csrf_token %}

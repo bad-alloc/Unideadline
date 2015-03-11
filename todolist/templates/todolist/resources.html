@@ -1,0 +1,37 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'todolist/style.css' %}" />
+
+{% include "todolist/headlinks.html" %}
+
+<form action="{% url 'todolist:add_ressource' %}" method="post">
+  {% csrf_token %}
+  <table class="plain-table">
+    <tr>
+      <td>Tag</td>
+      <td>Prio</td>
+      <td>Text</td>
+      <td>Desctiption</td>
+    </tr>
+    <tr>
+      <td>
+	<select name="new_todo_tag">
+	  {% for item in todo_types %}
+	  <option>{{item}}</option>
+	  {% endfor %}
+	</select>
+      </td>
+      <td><input type="Text" size=1 name="new_todo_priority"/></td>
+      <td><input type="Text" name="new_todo_text"/></td>
+      <td><input type="Text" name="new_todo_description"/></td>
+      <td><input type="submit" name="add_todo_button" value="Add"/> </td>
+    </tr>
+</table>
+</form>
+
+{% if ressouce_items %}
+<p>Ressources:</p>
+
+{% else %}
+<p>No Ressouces yet.</p>
+{% endif %}

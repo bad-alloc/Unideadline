@@ -46,10 +46,8 @@ def remove_todo(request):
     if not request.POST.get("remove", "") == '':
         TodoItem.objects.filter(id = request.POST.get("remove", "")).delete()
     elif not request.POST.get("set", "") == '':
-        print "### GOT ###", request.POST
         item_to_update = TodoItem.objects.get(id = request.POST.get("set", ""))
         item_to_update.todo_type = TodoType.objects.get(id=request.POST.get("set_todo_tag", ""))
-        print "UPDATING", request.POST.get("set_todo_tag", "")
         try:
             new_priority = int(request.POST.get("todo_priority", ""))
             item_to_update.priority = new_priority

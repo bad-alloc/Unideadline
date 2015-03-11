@@ -56,3 +56,6 @@ target/
 #Tutorials and random test code
 django_tutorial/
 sqlalchemytest/
+
+#Emacs backup files
+*~
