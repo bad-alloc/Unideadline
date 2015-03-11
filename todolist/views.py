@@ -22,6 +22,8 @@ class TodoListView(generic.ListView):
         return TodoItem.objects.all()
 
 def add_todo(request):
+    print "###########", request.user
+    
     # Ensure we have some numeric priority so we can sort the todo list by priority later
     raw_priority = request.POST.get("new_todo_priority", "")
     try:
