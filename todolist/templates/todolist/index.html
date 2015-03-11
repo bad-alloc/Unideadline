@@ -32,36 +32,36 @@
 {% if todo_items %}
 <p>Your Todo-list:</p>
 
-  <table style="width:100%">
-    <tr>
-      <td>Level</td>
-      <td>Prio</td>
-      <td>Name</td>
-      <td>Description</td>
-      <td>Tag/Priority/Actions</td>
-    </tr>
-    {% for item in todo_items %}
-    <tr>
-      <td> {{ item.todo_type.type_tag_name }} </td>
-      <td> {{ item.priority }} </td>
-      <td> {{ item.todo_text }} </td>
-      <td> {{ item.todo_description }} </td>
-      <td>
-	<form action="{% url 'todolist:remove_todo' %}" method="post">
-	  {% csrf_token %}
-	  <select name="set_todo_tag">
-	    {% for item in todo_types %}
-	    <option value="{{item.id}}">{{item}}</option>
-	    {% endfor %}
-	  </select>
-	  <input type="Text" size="1" name="todo_priority"/>
-	  <button type="submit" name="set" value="{{item.id}}">Set</button>
-	  <button type="submit" name="remove" value="{{item.id}}">Remove</button>
-	  </form>
-      </td>
-    </tr>
-    {% endfor %}
-  </table>
+<table style="width:100%">
+  <tr>
+    <td>Level</td>
+    <td>Prio</td>
+    <td>Name</td>
+    <td>Description</td>
+    <td>Tag/Priority/Actions</td>
+  </tr>
+  {% for item in todo_items %}
+  <tr>
+    <td> {{ item.todo_type.type_tag_name }} </td>
+    <td> {{ item.priority }} </td>
+    <td> {{ item.todo_text }} </td>
+    <td> {{ item.todo_description }} </td>
+    <td>
+      <form action="{% url 'todolist:remove_todo' %}" method="post">
+	{% csrf_token %}
+	<select name="set_todo_tag">
+	  {% for item in todo_types %}
+	  <option value="{{item.id}}">{{item}}</option>
+	  {% endfor %}
+	</select>
+	<input type="Text" size="1" name="todo_priority"/>
+	<button type="submit" name="set" value="{{item.id}}">Set</button>
+	<button type="submit" name="remove" value="{{item.id}}">Remove</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
 
 {% else %}
 <p>Nothing to do :)</p>
