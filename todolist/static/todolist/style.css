@@ -13,3 +13,7 @@ table.plain-table td {
     padding: 0;
     border-width: 0;
 }
+
+form {
+    padding: 0;
+}
