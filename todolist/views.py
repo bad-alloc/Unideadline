@@ -21,6 +21,20 @@ class TodoListView(generic.ListView):
         """Return all todo items."""
         return TodoItem.objects.all()
 
+class RessourceView(generic.ListView):
+    template_name = 'todolist/ressources.html'
+    context_object_name = 'ressource_data'
+
+    def get_context_data(self, **kwargs):
+        context = super(generic.ListView, self).get_context_data(**kwargs)
+        context['ressource_items'] = Ressource.objects.all()
+        context['ressource_types'] = RessourceType.objects.all()
+        return context
+
+    def get_queryset(self):
+        """Return all todo items."""
+        return Ressource.objects.all()
+    
 def add_todo(request):
     print "###########", request.user
     
@@ -59,3 +73,6 @@ def remove_todo(request):
 
         
     return HttpResponseRedirect(reverse('todolist:index'))
+
+def add_ressource(request):
+    return HttpResponseRedirect(reverse('todolist:ressource'))
