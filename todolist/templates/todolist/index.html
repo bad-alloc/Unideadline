@@ -6,15 +6,27 @@
 
 <form action="{% url 'todolist:add_todo' %}" method="post">
   {% csrf_token %}
-  <select name="new_todo_tag">
-    {% for item in todo_types %}
-    <option>{{item}}</option>
-    {% endfor %}
-  </select>
-  <input type="Text" size=1 name="new_todo_priority"/>
-  <input type="Text" name="new_todo_text"/>
-  <input type="Text" name="new_todo_description"/>
-  <input type="submit" name="add_todo_button" value="Add"/> </td>
+  <table class="plain-table">
+    <tr>
+      <td>Tag</td>
+      <td>Prio</td>
+      <td>Text</td>
+      <td>Desctiption</td>
+    </tr>
+    <tr>
+      <td>
+	<select name="new_todo_tag">
+	  {% for item in todo_types %}
+	  <option>{{item}}</option>
+	  {% endfor %}
+	</select>
+      </td>
+      <td><input type="Text" size=1 name="new_todo_priority"/></td>
+      <td><input type="Text" name="new_todo_text"/></td>
+      <td><input type="Text" name="new_todo_description"/></td>
+      <td><input type="submit" name="add_todo_button" value="Add"/> </td>
+    </tr>
+</table>
 </form>
 
 {% if todo_items %}
@@ -38,7 +50,7 @@
       <td>
 	<select name="set_todo_tag">
 	  {% for item in todo_types %}
-	  <option>{{item}}</option>
+	  <option value="{{item.id}}">{{item}}</option>
 	  {% endfor %}
 	</select>
 	<input type="Text" size="1" name="todo_priority"/>

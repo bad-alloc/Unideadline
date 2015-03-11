@@ -8,3 +8,8 @@ td {
     border-color: #000;
     border-style: solid;
 }
+
+table.plain-table td {
+    padding: 0;
+    border-width: 0;
+}
