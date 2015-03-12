@@ -34,20 +34,21 @@ class RessourceView(generic.ListView):
     def get_queryset(self):
         """Return all todo items."""
         return Ressource.objects.all()
-    
-def add_todo(request):
-    print "###########", request.user
-    
-    # Ensure we have some numeric priority so we can sort the todo list by priority later
-    raw_priority = request.POST.get("new_todo_priority", "")
+
+def safe_number_parse(string):
     try:
-        new_priority = int(raw_priority)
+        new_priority = int(string)
     except ValueError:
         new_priority = 1
+    return new_priority
+    
+def add_todo(request):
+    # Ensure we have some numeric priority so we can sort the todo list by priority later
+    new_priority = safe_number_parse(request.POST.get("new_todo_priority", ""))
 
     # Create a new item and store it to the database
     new_todo = TodoItem(priority = new_priority,
-                        todo_type = TodoType.objects.get(type_tag_name=request.POST.get("new_todo_tag", "")), #TODO: use ID
+                        todo_type = TodoType.objects.get(id = request.POST.get("new_todo_tag", "")),
                         todo_text = request.POST.get("new_todo_text", ""),
                         todo_description = request.POST.get("new_todo_description", ""),
                         deadline = datetime.datetime.now())
@@ -75,4 +76,20 @@ def remove_todo(request):
     return HttpResponseRedirect(reverse('todolist:index'))
 
 def add_ressource(request):
+    new_maxpts = safe_number_parse(request.POST.get("new_ressource_maxpts", ""))
+    new_ressource_name = request.POST.get("new_ressource_name", "")
+    new_ressource_tag = request.POST.get("new_ressource_tag", "")
+
+    #new_ressource_tag
+    
+    # new_ressource = Ressource(ressource_name = new_ressource_name,
+    #                           ressource_type = 
+    #                           ressource_location =
+    #                           associated_todo_item =
+    #                           max_credit = new_maxpts
+    #                           obtained_credit = 0)
+
+    # new_ressource.save()
+    
     return HttpResponseRedirect(reverse('todolist:ressource'))
+
