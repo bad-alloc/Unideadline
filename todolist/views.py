@@ -79,17 +79,15 @@ def add_ressource(request):
     new_maxpts = safe_number_parse(request.POST.get("new_ressource_maxpts", ""))
     new_ressource_name = request.POST.get("new_ressource_name", "")
     new_ressource_tag = request.POST.get("new_ressource_tag", "")
-
-    #new_ressource_tag
     
-    # new_ressource = Ressource(ressource_name = new_ressource_name,
-    #                           ressource_type = 
-    #                           ressource_location =
-    #                           associated_todo_item =
-    #                           max_credit = new_maxpts
-    #                           obtained_credit = 0)
+    new_ressource = Ressource(ressource_name = new_ressource_name,
+                              ressource_type = RessourceType.objects.get(id = request.POST.get("new_ressource_tag", "")),
+                              ressource_location = "None",
+                              associated_todo_item = None,
+                              max_credit = new_maxpts,
+                              obtained_credit = 0)
 
-    # new_ressource.save()
+    new_ressource.save()
     
     return HttpResponseRedirect(reverse('todolist:ressource'))
 
