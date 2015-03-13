@@ -32,7 +32,7 @@ class RessourceView(generic.ListView):
         return context
 
     def get_queryset(self):
-        """Return all todo items."""
+        """Return all ressource items."""
         return Ressource.objects.all()
 
 def safe_number_parse(string):
@@ -82,7 +82,6 @@ def add_ressource(request):
     
     new_ressource = Ressource(ressource_name = new_ressource_name,
                               ressource_type = RessourceType.objects.get(id = request.POST.get("new_ressource_tag", "")),
-                              ressource_location = "None",
                               associated_todo_item = None,
                               max_credit = new_maxpts,
                               obtained_credit = 0)

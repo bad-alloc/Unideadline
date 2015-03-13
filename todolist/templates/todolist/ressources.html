@@ -27,8 +27,35 @@
 </table>
 </form>
 
-{% if ressouce_items %}
+{% if ressource_items %}
 <p>Ressources:</p>
+
+<table style="width:100%">
+  <tr>
+    <td>Name</td>
+    <td></td>
+  </tr>
+  {% for item in ressource_items %}
+  <tr>
+    <td>{{item.ressource_name}}</td>
+    <td>
+      <p>Points
+	<input type="Text" size=3 value={{item.obtained_credit}} name="ressource_points_max"/>
+	<input type="Text" size=3 value={{item.max_credit}} name="ressource_points_achieved"/></p>
+      <p>
+	Type
+	<select  name="set_ressource_type">
+	  {% for item in ressource_types %}
+	  <option value="{{item.id}}">{{item}}</option>
+	  {% endfor %}
+	</select>
+      </p>
+      <p> URLs <button type="submit" name="addurl" value="{{item.id}}">+</button> </p>
+      
+    </td>
+  </tr>
+  {% endfor %}
+</table>
 
 {% else %}
 <p>No Ressouces yet.</p>

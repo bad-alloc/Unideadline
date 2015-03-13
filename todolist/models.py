@@ -20,22 +20,30 @@ class RessourceType(models.Model):
 
     def __unicode__(self):
         return self.ressource_name
-
+    
 # Ressources belong to todo items, like exercise sheets which have to be done.
 class Ressource(models.Model):
-    ressource_name = models.CharField(max_length=200)
+    ressource_name = models.CharField(max_length=200, default='None')
     ressource_type = models.ForeignKey(RessourceType)
-    ressource_location = models.URLField(max_length=500) # TODO: Several urls here!
     
     # This way TodoItems can have many Ressources
-    associated_todo_item = models.ForeignKey('TodoItem')
+    # We allow null and blank fields because ressources initially have no associated todo
+    associated_todo_item = models.ForeignKey('TodoItem', null=True, blank=True)
 
     max_credit = models.IntegerField()
     obtained_credit = models.IntegerField()
  
     def __unicode__(self):
-        return self.ressource_type
+        return self.ressource_name
 
+# URLs to locate ressources, each ressource can have many URLs
+class URL(models.Model):
+    url_string = models.CharField(max_length=1000, default='')
+    ressource = models.ForeignKey(Ressource)
+    
+    def __unicode__(self):
+        return self.url_string
+    
 # Like emcas org mode, there can be different todo tags, like TODO
 # DONE CANCELLED etc.
 class TodoType(models.Model):
